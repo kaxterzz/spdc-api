@@ -1,6 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 const users = require('./routes/users');
+const products = require('./routes/products') ;
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database'); //database configuration
 const cors = require('cors');
@@ -19,16 +20,21 @@ app.use(function(req, res, next) {
 
 app.set('secretKey', 'nodeRestApi'); // jwt secret token
 // connection to mongodb
+
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
 app.get('/', function(req, res){
 res.json({"tutorial" : "Build REST API with node.js"});
 });
 // public route
 app.use('/users', users);
 // private route
+app.use('/products', validateUser, products);
+
 app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
 });
