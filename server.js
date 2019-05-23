@@ -21,6 +21,7 @@ app.set('secretKey', 'nodeRestApi'); // jwt secret token
 // connection to mongodb
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(logger('dev'));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.get('/', function(req, res){
 res.json({"tutorial" : "Build REST API with node.js"});
