@@ -18,6 +18,8 @@ app.use(function(req, res, next) {
   next();
 });
 
+
+
 app.set('secretKey', 'nodeRestApi'); // jwt secret token
 // connection to mongodb
 
