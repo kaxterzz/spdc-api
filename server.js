@@ -1,7 +1,8 @@
 const express = require('express');
 const logger = require('morgan');
 const users = require('./routes/users');
-const products = require('./routes/products') ;
+const products = require('./routes/products');
+const orders = require('./routes/orders');
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database'); //database configuration
 const cors = require('cors');
@@ -36,6 +37,8 @@ res.json({"tutorial" : "Build REST API with node.js"});
 app.use('/users', users);
 // private route
 app.use('/products', validateUser, products);
+
+app.use('/orders', validateUser, orders);
 
 app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
