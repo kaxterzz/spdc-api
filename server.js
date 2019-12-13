@@ -2,6 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 const users = require('./routes/users');
 const products = require('./routes/products');
+const emp = require('./routes/emp');
 const orders = require('./routes/orders');
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database'); //database configuration
@@ -33,8 +34,11 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.get('/', function(req, res){
 res.json({"tutorial" : "Build REST API with node.js"});
 });
+
 // public route
 app.use('/users', users);
+
+app.use('/emp', emp);
 // private route
 app.use('/products', validateUser, products);
 
@@ -43,6 +47,7 @@ app.use('/orders', validateUser, orders);
 app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
 });
+
 function validateUser(req, res, next) {
   jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
     if (err) {
